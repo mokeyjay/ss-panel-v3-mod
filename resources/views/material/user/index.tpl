@@ -353,6 +353,28 @@
 								</div>
 							</div>
 
+                            <div class="card">
+                                <div class="card-main">
+                                    <div class="card-inner margin-bottom-no">
+                                        <p class="card-heading">流量抽奖</p>
+                                        <p>每次消耗 {$config['lotteryExpend']}MB 流量</p>
+
+                                        <p>即可抽到 {$config['lotteryMin']}~{$config['lotteryMax']}MB 流量</p>
+
+                                        <p id="lottery-msg"></p>
+                                    </div>
+
+                                    <div class="card-action">
+                                        <div class="card-action-btn pull-left">
+                                            <p id="checkin-btn">
+                                                <button id="lottery" class="btn btn-brand btn-flat waves-attach"><span class="icon">check</span>&nbsp;抽奖</button>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
 
 						{if $enable_duoshuo=='true'}
 
@@ -470,6 +492,24 @@ $(document).ready(function () {
 			}
 		})
 	})
+
+    // 抽奖
+  $("#lottery").click(function () {
+    $.ajax({
+      type: "POST",
+      url: "/user/lottery",
+      dataType: "json",
+      success: function (data) {
+        $("#lottery-msg").html(data.msg);
+        $("#result").modal();
+        $("#msg").html(data.msg);
+      },
+      error: function (jqXHR) {
+        $("#result").modal();
+        $("#msg").html("发生错误：" + jqXHR.status);
+      }
+    })
+  })
 })
 
 

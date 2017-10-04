@@ -30,7 +30,10 @@ class Config
             "jump_delay" => self::get("jump_delay"),
             "enable_analytics_code" => self::get("enable_analytics_code"),
             "enable_donate" => self::get("enable_donate"),
-            "enable_telegram" => self::get("enable_telegram")
+            "enable_telegram" => self::get("enable_telegram"),
+            'lotteryExpend' => self::get('lotteryExpend'),
+            'lotteryMin' => self::get('lotteryMin'),
+            'lotteryMax' => self::get('lotteryMax'),
          ];
     }
 

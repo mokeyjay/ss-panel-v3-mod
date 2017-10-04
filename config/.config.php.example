@@ -27,6 +27,11 @@ $System_Config['mailDriver'] = 'mailgun';   // mailgun or smtp or sendgrid
 $System_Config['checkinMin'] = '1989';       // 签到最少流量 单位MB
 $System_Config['checkinMax'] = '8964';       // 签到最多流量
 
+// 流量抽奖设置（单位：MB）
+$System_Config['lotteryExpend'] = '1000'; // 抽奖消耗流量
+$System_Config['lotteryMin'] = '500'; // 抽奖最少流量
+$System_Config['lotteryMax'] = '3000'; // 抽奖最多流量
+
 //
 $System_Config['defaultTraffic'] = '100';      // 用户初始流量 单位GB
 

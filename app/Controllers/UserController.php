@@ -1442,6 +1442,24 @@ class UserController extends BaseController
         return $this->echoJson($response, $res);
     }
 
+    public function doLottery($request, $response, $args)
+    {
+        // 检查流量是否足够抽奖消耗
+        if(Tools::flowToMB($this->user->transfer_enable) < Config::get('lotteryExpend')){
+            $res['msg'] = "您的剩余流量不足以抽奖了";
+            $res['ret'] = 1;
+            return $response->getBody()->write(json_encode($res));
+        }
+        $this->user->transfer_enable = $this->user->transfer_enable - Tools::toMB(Config::get('lotteryExpend'));
+
+        $traffic = rand(Config::get('lottereyMin'), Config::get('lotteryMax'));
+        $this->user->transfer_enable = $this->user->transfer_enable + Tools::toMB($traffic);
+        $this->user->save();
+        $res['msg'] = sprintf("抽到了 %u MB流量.", $traffic);
+        $res['ret'] = 1;
+        return $this->echoJson($response, $res);
+    }
+
     public function kill($request, $response, $args)
     {
         return $this->view()->display('user/kill.tpl');
