@@ -31,6 +31,7 @@ class Config
             "enable_analytics_code" => self::get("enable_analytics_code"),
             "enable_donate" => self::get("enable_donate"),
             "enable_telegram" => self::get("enable_telegram"),
+            'lotteryClaim' => self::get('lotteryClaim'),
             'lotteryExpend' => self::get('lotteryExpend'),
             'lotteryMin' => self::get('lotteryMin'),
             'lotteryMax' => self::get('lotteryMax'),

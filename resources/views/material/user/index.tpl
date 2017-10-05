@@ -345,7 +345,7 @@
 													<button id="checkin" class="btn btn-brand btn-flat waves-attach"><span class="icon">check</span>&nbsp;续命</button>
 												</p>
 											{else}
-												<p><a class="btn btn-brand disabled btn-flat waves-attach" href="#"><span class="icon">check</span>&nbsp;不能续命</a></p>
+												<p><a class="btn btn-brand disabled btn-flat waves-attach" href="#"><span class="icon">close</span>&nbsp;不能续命</a></p>
 											{/if}
 										</div>
 									</div>
@@ -361,13 +361,21 @@
 
                                         <p>即可抽到 {$config['lotteryMin']}~{$config['lotteryMax']}MB 流量</p>
 
+                                        <p>（当你剩余的流量大于 {$config['lotteryClaim']}MB 时才能参与抽奖）</p>
+
                                         <p id="lottery-msg"></p>
                                     </div>
 
                                     <div class="card-action">
                                         <div class="card-action-btn pull-left">
                                             <p id="checkin-btn">
-                                                <button id="lottery" class="btn btn-brand btn-flat waves-attach"><span class="icon">check</span>&nbsp;抽奖</button>
+                                                {if $user->isAbleToLottery() }
+                                                    <p id="checkin-btn">
+                                                        <button id="lottery" class="btn btn-brand btn-flat waves-attach"><span class="icon">check</span>&nbsp;抽奖</button>
+                                                    </p>
+                                                {else}
+                                                    <p><a class="btn btn-brand disabled btn-flat waves-attach" href="#"><span class="icon">close</span>&nbsp;不能抽奖</a></p>
+                                                {/if}
                                             </p>
                                         </div>
                                     </div>
@@ -492,24 +500,6 @@ $(document).ready(function () {
 			}
 		})
 	})
-
-    // 抽奖
-  $("#lottery").click(function () {
-    $.ajax({
-      type: "POST",
-      url: "/user/lottery",
-      dataType: "json",
-      success: function (data) {
-        $("#lottery-msg").html(data.msg);
-        $("#result").modal();
-        $("#msg").html(data.msg);
-      },
-      error: function (jqXHR) {
-        $("#result").modal();
-        $("#msg").html("发生错误：" + jqXHR.status);
-      }
-    })
-  })
 })
 
 
@@ -579,6 +569,28 @@ initGeetest({
 
 
 {/if}
+
+
+
+    $(function() {
+      // 抽奖
+      $("#lottery").click(function () {
+        $.ajax({
+          type: "POST",
+          url: "/user/lottery",
+          dataType: "json",
+          success: function (data) {
+            $("#lottery-msg").html(data.msg);
+            $("#result").modal();
+            $("#msg").html(data.msg);
+          },
+          error: function (jqXHR) {
+            $("#result").modal();
+            $("#msg").html("发生错误：" + jqXHR.status);
+          }
+        })
+      })
+    })
 
 
 </script>

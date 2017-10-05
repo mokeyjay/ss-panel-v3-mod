@@ -1444,8 +1444,9 @@ class UserController extends BaseController
 
     public function doLottery($request, $response, $args)
     {
+        $user_transfer = Tools::flowToMB($this->user->transfer_enable);
         // 检查流量是否足够抽奖消耗
-        if(Tools::flowToMB($this->user->transfer_enable) < Config::get('lotteryExpend')){
+        if($user_transfer < Config::get('lotteryExpend') || $user_transfer < Config::get('lotteryClaim')){
             $res['msg'] = "您的剩余流量不足以抽奖了";
             $res['ret'] = 1;
             return $response->getBody()->write(json_encode($res));

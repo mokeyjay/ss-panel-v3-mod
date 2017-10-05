@@ -187,6 +187,15 @@ class User extends Model
         return false;
     }
 
+    /**
+     * 能否抽奖
+     */
+    public function isAbleToLottery()
+    {
+        $user_transfer = Tools::flowToMB($this->attributes['transfer_enable']);
+        return $user_transfer >= Config::get('lotteryClaim');
+    }
+
     /*
      * @param traffic 单位 MB
      */
