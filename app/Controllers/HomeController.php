@@ -109,4 +109,12 @@ class HomeController extends BaseController
     {
         Pay::callback($request);
     }
+    public function wxpay_callback($request, $response, $args) {
+  	     Pay::wxcallback($request);
+    }
+    public function alipay_callback($request,$response,$args)
+    {
+	    Pay::alicallback($request);
+    }
+
 }
